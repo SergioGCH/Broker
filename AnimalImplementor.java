@@ -1,7 +1,10 @@
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
-public class AnimalImplementor implements Animal{
-
+public class AnimalImplementor extends UnicastRemoteObject implements Animal{
+    public AnimalImplementor() throws RemoteException{
+        super();
+    }
     @Override
     public boolean esAnimal(String animal) {
         return animal.equals("Pato") || animal.equals("Tortuga") || 
