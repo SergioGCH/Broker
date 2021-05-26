@@ -12,9 +12,13 @@ MAIN_BROKER = Broker
 MAIN_SERVER_A = ServidorA
 MAIN_SERVER_B = ServidorB
 MAIN_CLIENT = Cliente
-HOST_BROKER = "155.210.154.192:32008"
-HOST_SERVER_A = "155.210.154.193:32008"
-HOST_SERVER_B = "155.210.154.193:32007"
+
+PORT_BROKER = "32008"
+PORT_SERVER_A = "32008"
+PORT_SERVER_B = "32007"
+HOST_BROKER = "155.210.154.192:"$(PORT_BROKER)
+HOST_SERVER_A = "155.210.154.193:"$(PORT_SERVER_A)
+HOST_SERVER_B = "155.210.154.193:"$(PORT_SERVER_B)
 CLASSES = Animal.java \
 	AnimalImplementor.java \
 	Broker.java \
@@ -44,10 +48,13 @@ serverB: $(MAIN_SERVER_B).class
 	$(JVM) $(MAIN_SERVER_B) $(HOST_BROKER) $(HOST_SERVER_B)
 
 rmi:
-	rmiregistry 32008
+	rmiregistry $(PORT_BROKER)
 	
-rmi2:
-	rmiregistry 32010
+rmiA:
+	rmiregistry $(PORT_SERVER_A)
+	
+rmiB:
+	rmiregistry $(PORT_SERVER_B)
 
 client: $(MAIN_CLIENT).class
 	$(JVM) $(MAIN_CLIENT) $(HOST_BROKER) $(in)
