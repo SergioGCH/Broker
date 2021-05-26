@@ -2,24 +2,42 @@ import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.rmi.RemoteException;
 
 public class ServidorA extends AnimalImplementor{
-
-    public ServidorA(){
-        
-    }
+	public ServidorA() throws RemoteException
+	{
+		super();//Llama al constructor de AnimalImplementor
+		//Inicializar las variables privadas
+	}
     public static void main(String[] args) {
+	//Fijar el directorio donde se encuentra el java.policy
+	System.setProperty("java.security.policy", "./java.policy");
+	if (System.getSecurityManager() == null) {
+		//Crear administrador de seguridad
+		System.setSecurityManager(new SecurityManager());
+	}
+	//Nombre o IP del host donde reside el broker
+	String hostBroker = args[0];;
+	//Nombre del broker
+	String nombreBroker = "Broker520";
+	///Nombre o IP del host donde reside el objeto servidor
+	String hostServidor = args[1];; //se puede usar "IP" o "IP:puerto"
+	//Por defecto RMI usa el puerto 1099
+	//Nombre del servidor
+	String nombreServidor = "ServidorA520";
+
          try {
             System.out.println("Preparando servidor RMI...");
-            // Instanciamos la clase implementada
+            // Instanciar el objeto servidor
             AnimalImplementor animal = new AnimalImplementor();
-            
             System.out.println("Creando referencia a objecto remoto");
-            Naming.rebind("//155.210.154.191/ServidorA520", animal);
+	    // Registrar el objeto remoto
+            Naming.rebind("//"+hostServidor+"/"+nombreServidor, animal);
             System.out.println("Buscando broker");
-            Servicio servicio = (Servicio) Naming.lookup("//155.210.154.192/Broker720");
+            Servicio servicio = (Servicio) Naming.lookup("//"+hostBroker+"/"+nombreBroker);
             System.out.println("Registrando servidor");
-            servicio.registrar_servidor("ServidorA520", "155.210.154.191");
+            servicio.registrar_servidor(nombreServidor, hostServidor);
             System.out.println("El servidorA se ha registrado");
         } catch (Exception e) {
             System.out.println("Error en Servidor: " + e.getMessage());
