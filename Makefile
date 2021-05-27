@@ -1,3 +1,5 @@
+# AUTORES: Binhui Chen Zhou (779799), Sergio García-Campero Hernández (721520) 
+ 
 #"make" para compilarlo
 #"make broker" para compilar y ejecutar el broker
 #"make serverA" para compilar y ejecutar el servidorA
@@ -13,9 +15,9 @@ MAIN_SERVER_A = ServidorA
 MAIN_SERVER_B = ServidorB
 MAIN_CLIENT = Cliente
 
-PORT_BROKER = "32008"
-PORT_SERVER_A = "32008"
-PORT_SERVER_B = "32007"
+PORT_BROKER = "32009"
+PORT_SERVER_A = "32009"
+PORT_SERVER_B = "32010"
 HOST_BROKER = "155.210.154.192:"$(PORT_BROKER)
 HOST_SERVER_A = "155.210.154.193:"$(PORT_SERVER_A)
 HOST_SERVER_B = "155.210.154.193:"$(PORT_SERVER_B)
@@ -57,7 +59,7 @@ rmiB:
 	rmiregistry $(PORT_SERVER_B)
 
 client: $(MAIN_CLIENT).class
-	$(JVM) $(MAIN_CLIENT) $(HOST_BROKER) $(in)
+	$(JVM) $(MAIN_CLIENT) $(HOST_BROKER) $(a) $(w) $(n)
 
 clean:
 	$(RM) *.class
